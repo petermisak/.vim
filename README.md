@@ -1,2 +1,2 @@
 # .vim
-# .vim
+My Vim settings.
