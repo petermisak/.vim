@@ -9,30 +9,20 @@ filetype off
 call pathogen#helptags()
 call pathogen#infect()
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#rc()
-
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'flazz/vim-colorschemes'
-Plugin 'ctrlp.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'fugitive.vim'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'Syntastic'
-Plugin 'morhetz/gruvbox'
-
-call vundle#end()
+set rtp+=/opt/local/share/fzf/vim
 
 " Change the leader
-:let mapleader=","
+let mapleader=","
+let g:mapleader=","
 
 " Quickly reload/edit the vimrc file
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
 
 " Mouse
-"set mouse=a
+if has('mouse')
+  set mouse=a
+endif
 "set ttymouse=xterm2
 
 " Easier moving between tabs
@@ -55,11 +45,17 @@ set hidden
 set nowrap
 set backspace=indent,eol,start
 set autoindent
+set complete-=i
 set copyindent
-"set number
+set number
 set showmatch
 set title
+set noswapfile
 set nobackup
+set nowritebackup
+set splitright
+set splitbelow
+set encoding=utf-8
 
 " Filetype
 filetype plugin indent on
@@ -77,6 +73,9 @@ set tabstop=4
 set shiftwidth=4
 set shiftround
 set expandtab
+
+set complete=.,w,b,u,t
+set completeopt=longest,menuone
 
 " HTML
 autocmd FileType html set shiftwidth=2
@@ -102,16 +101,17 @@ autocmd FileType scala set tabstop=2
 "colorscheme warm_grey
 "let g:airline_theme="base16_default"
 
-"let ayucolor="mirage"
-"colorscheme ayu
+let ayucolor="mirage"
+colorscheme ayu
 
+"let g:airline_theme="ayu"
 let g:airline_theme="one"
-colorscheme one
+"colorscheme one
 
 set background=dark
 "colorscheme palenight
 "colorscheme dracula
-"let g:nord_comment_brightness = 18
+let g:nord_comment_brightness = 18
 "colorscheme onedark
 "colorscheme Tomorrow-Night
 "colorscheme Tomorrow-Night-Eighties
@@ -147,8 +147,20 @@ set background=dark
 let g:airline_powerline_fonts = 1
 set laststatus=2
 
-" Some nice key mappings
-map <F2> :NERDTreeToggle<CR>
+" NerdTree
+nmap <C-n> :NERDTreeToggle<CR>
+noremap <Leader>f :NERDTreeFind<cr>
+
+let NERDTreeShowHidden=1
+
+let NERDTreeIgnore=['\.vim$', '\~$', '\.git$', '.DS_Store']
+
+" Close nerdtree and vim on close file
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
+" Some useful remaps
+nnoremap <silent> <leader>q :Sayonara<CR>
+
 set pastetoggle=<F3>
 map <silent> <leader>/ :nohlsearch<CR>
 
