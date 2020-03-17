@@ -98,18 +98,25 @@ autocmd FileType scala set tabstop=2
 "colorscheme espresso-soda
 "let g:airline_theme="silver"
 
+let iterm_profile = $ITERM_PROFILE
+if iterm_profile == "Tango Light"
+    set background=light
+    colorscheme Tomorrow
+    let g:airline_theme="silver"
+else
+    set background=dark
+    "colorscheme warm_grey
+    "let g:airline_theme="base16_default"
+
+    let ayucolor="mirage"
+    colorscheme ayu
+
+    "let g:airline_theme="ayu"
+    let g:airline_theme="one"
+    "colorscheme one
+endif
+
 "set background=dark
-"colorscheme warm_grey
-"let g:airline_theme="base16_default"
-
-let ayucolor="mirage"
-colorscheme ayu
-
-"let g:airline_theme="ayu"
-let g:airline_theme="one"
-"colorscheme one
-
-set background=dark
 "colorscheme palenight
 "colorscheme dracula
 let g:nord_comment_brightness = 18
