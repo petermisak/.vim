@@ -108,11 +108,12 @@ else
     "colorscheme warm_grey
     "let g:airline_theme="base16_default"
 
-    let ayucolor="mirage"
-    colorscheme ayu
+    "let ayucolor="mirage"
+    "colorscheme ayu
+    colorscheme OceanicNext
 
     "let g:airline_theme="ayu"
-    let g:airline_theme="one"
+    let g:airline_theme="base16_oceanicnext"
     "colorscheme one
 endif
 
