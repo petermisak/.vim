@@ -108,19 +108,18 @@ else
     "colorscheme warm_grey
     "let g:airline_theme="base16_default"
 
-    "let ayucolor="mirage"
-    "colorscheme ayu
-    colorscheme OceanicNext
+    let ayucolor="mirage"
+    colorscheme ayu
+    "colorscheme OceanicNext
 
-    "let g:airline_theme="ayu"
-    let g:airline_theme="base16_oceanicnext"
+    let g:airline_theme="ayu_mirage"
+    "let g:airline_theme="base16_oceanicnext"
     "colorscheme one
 endif
 
 "set background=dark
 "colorscheme palenight
 "colorscheme dracula
-let g:nord_comment_brightness = 18
 "colorscheme onedark
 "colorscheme Tomorrow-Night
 "colorscheme Tomorrow-Night-Eighties
@@ -135,7 +134,8 @@ let g:nord_comment_brightness = 18
 "let g:airline_theme="base16_default"
 
 "let g:gruvbox_italic=0
-"let g:gruvbox_contrast_dark="soft"
+"let g:gruvbox_contrast_dark="medium"
+"let g:gruvbox_contrast_light="hard"
 "colorscheme gruvbox
 
 "let g:solarized_contrast="high"

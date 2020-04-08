@@ -50,3 +50,6 @@
 [submodule "bundle/vim-sayonara"]
 	path = bundle/vim-sayonara
 	url = https://github.com/mhinz/vim-sayonara.git
+[submodule "bundle/palenight.vim"]
+	path = bundle/palenight.vim
+	url = https://github.com/drewtempelmeyer/palenight.vim
