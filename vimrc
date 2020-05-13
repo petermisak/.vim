@@ -99,10 +99,10 @@ autocmd FileType scala set tabstop=2
 "let g:airline_theme="silver"
 
 let iterm_profile = $ITERM_PROFILE
-if iterm_profile == "Tango Light"
+if iterm_profile == "Atom One Light"
     set background=light
-    colorscheme Tomorrow
-    let g:airline_theme="silver"
+    colorscheme one
+    let g:airline_theme="one"
 else
     set background=dark
     "colorscheme warm_grey
