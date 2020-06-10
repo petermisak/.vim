@@ -150,7 +150,7 @@ endif
 "colorscheme wombat
 
 " Editing stuff
-"set colorcolumn=80
+set colorcolumn=120
 
 " Airline
 let g:airline_powerline_fonts = 1
