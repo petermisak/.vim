@@ -32,7 +32,7 @@ map <leader>[ :tabprevious<CR>
 map <leader>] :tabnext<CR>
 
 " CtrlP
-" Use <leader>p to open ctrlp
+" Use <leader>? to open ctrlp
 let g:ctrlp_map = '<leader>?'
 " Ignore these directories
 set wildignore+=*/target/**
@@ -94,10 +94,6 @@ autocmd FileType javascript set tabstop=4
 autocmd FileType scala set shiftwidth=2
 autocmd FileType scala set tabstop=2
 
-"set background=light
-"colorscheme espresso-soda
-"let g:airline_theme="silver"
-
 let iterm_profile = $ITERM_PROFILE
 if iterm_profile == "Atom One Light"
     set background=light
@@ -105,49 +101,10 @@ if iterm_profile == "Atom One Light"
     let g:airline_theme="one"
 else
     set background=dark
-    "colorscheme warm_grey
-    "let g:airline_theme="base16_default"
-
     let ayucolor="mirage"
     colorscheme ayu
-    "colorscheme OceanicNext
-
     let g:airline_theme="ayu_mirage"
-    "let g:airline_theme="base16_oceanicnext"
-    "colorscheme one
 endif
-
-"set background=dark
-"colorscheme palenight
-"colorscheme dracula
-"colorscheme onedark
-"colorscheme Tomorrow-Night
-"colorscheme Tomorrow-Night-Eighties
-"colorscheme delek
-"colorscheme molokai
-"colorscheme zenburn
-"colorscheme luna
-"colorscheme seoul256
-"colorscheme blueprint
-"colorscheme jellybeans
-"colorscheme codeburn
-"let g:airline_theme="base16_default"
-
-"let g:gruvbox_italic=0
-"let g:gruvbox_contrast_dark="medium"
-"let g:gruvbox_contrast_light="hard"
-"colorscheme gruvbox
-
-"let g:solarized_contrast="high"
-"let g:solarized_termtrans=1
-"colorscheme solarized
-"call togglebg#map("<F12>")
-
-"colorscheme Tomorrow
-"colorscheme hybrid
-"colorscheme inkpot
-"colorscheme xoria256
-"colorscheme wombat
 
 " Editing stuff
 set colorcolumn=120
@@ -158,7 +115,7 @@ set laststatus=2
 
 " NerdTree
 nmap <C-n> :NERDTreeToggle<CR>
-noremap <Leader>f :NERDTreeFind<cr>
+noremap <leader>f :NERDTreeFind<CR>
 
 let NERDTreeShowHidden=1
 
