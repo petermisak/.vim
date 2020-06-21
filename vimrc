@@ -68,7 +68,6 @@ syntax on
 set hlsearch
 set incsearch
 filetype plugin on
-"set t_Co=256
 
 set tabstop=4
 set shiftwidth=4
@@ -95,7 +94,7 @@ autocmd FileType scala set shiftwidth=2
 autocmd FileType scala set tabstop=2
 
 let iterm_profile = $ITERM_PROFILE
-if iterm_profile == "Atom One Light"
+if iterm_profile == "Atom One Light" || has("gui_running")
     set background=light
     colorscheme one
     let g:airline_theme="one"
