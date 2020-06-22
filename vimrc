@@ -36,8 +36,16 @@ map <leader>] :tabnext<CR>
 let g:ctrlp_map = '<leader>?'
 " Ignore these directories
 set wildignore+=*/target/**
-" disable caching
-let g:ctrlp_use_caching=0
+let g:ctrlp_use_caching=1
+let g:ctrlp_clear_cache_on_exit = 1
+
+" ignore files in .gitignore
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+
+let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist)|(\.(swp|ico|git|svn))$'
+
+" Close nerdtree and vim on close file
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 " Thanks to this we can have unwritten changes to a file and open a new file
 " using :e, without being forced to write or undo our changes first.
@@ -61,7 +69,7 @@ set encoding=utf-8
 " Filetype
 filetype plugin indent on
 
-set ai
+set noshowmode                  " No need to show mode as we can see it in Airline
 set history=100
 set ruler
 syntax on
@@ -129,7 +137,6 @@ nnoremap <silent> <leader>q :Sayonara<CR>
 set pastetoggle=<F3>
 map <silent> <leader>/ :nohlsearch<CR>
 
-" This will enable us to do a sudo AFTER opening a file if we forgot to do
-" that before
+" This will enable us to do a sudo AFTER opening a file if we forgot to do that before.
 cmap w!! w !sudo tee % >/dev/null
 
