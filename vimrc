@@ -172,5 +172,6 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 
 " Sayonara
 nnoremap <silent> <leader>q :Sayonara<CR>
+nnoremap <silent> <leader>Q :Sayonara!<CR>
 
 " vim:ts=2:sw=2:et
