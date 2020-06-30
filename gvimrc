@@ -1,3 +1,3 @@
 set background=light
-set guifont=JetBrains\ Mono\ Medium:h13
+set guifont=JetBrains\ Mono\ Regular:h13
 set linespace=3
