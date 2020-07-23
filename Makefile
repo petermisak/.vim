@@ -11,6 +11,14 @@ update-plugins: ## Updates all plugins.
 	git submodule update --remote
 	git submodule foreach 'git pull --recurse-submodules origin `git rev-parse --abbrev-ref HEAD`'
 
+check_defined = \
+				$(strip $(foreach 1,$1, \
+				$(call __check_defined,$1,$(strip $(value 2)))))
+__check_defined = \
+				  $(if $(value $1),, \
+				  $(error Undefined $1$(if $2, ($2))$(if $(value @), \
+				  required by target `$@')))
+
 .PHONY: remove-submodule
 remove-submodule: ## Removes a git submodule (eg. MODULE=bundle/nginx.vim).
 	@:$(call check_defined, MODULE, path of module to remove)
