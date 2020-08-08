@@ -108,6 +108,8 @@ autocmd FileType javascript set tabstop=4
 " Scala
 autocmd FileType scala set shiftwidth=2
 autocmd FileType scala set tabstop=2
+" YAML
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2
 
 " Theme
 let iterm_profile = $ITERM_PROFILE
