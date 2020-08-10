@@ -117,6 +117,10 @@ if iterm_profile == "Atom One Light" || has("gui_running")
   set background=light
   colorscheme one
   let g:airline_theme="one"
+elseif iterm_profile == "Material / PaperColor"
+  set background=light
+  colorscheme PaperColor
+  let g:airline_theme="papercolor"
 else
   set background=dark
   let ayucolor="mirage"
