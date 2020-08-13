@@ -78,3 +78,6 @@
 [submodule "vim-markdown"]
 	path = vim-markdown
 	url = https://github.com/plasticboy/vim-markdown.git
+[submodule "/Users/peter/.vim/bundle/kotlin-vim"]
+	path = /Users/peter/.vim/bundle/kotlin-vim
+	url = https://github.com/udalov/kotlin-vim
