@@ -162,11 +162,11 @@ let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist)|(\.(swp|ico|git|sv
 " Close nerdtree and vim on close file
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
-" Airline
+""" Airline
 let g:airline_powerline_fonts = 1
 set laststatus=2
 
-" NerdTree
+""" NerdTree
 nmap <C-n> :NERDTreeToggle<CR>
 noremap <leader>f :NERDTreeFind<CR>
 
@@ -176,7 +176,10 @@ let NERDTreeIgnore=['\.vim$', '\~$', '\.git$', '.DS_Store']
 " Close nerdtree and vim on close file
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
-" Sayonara
+""" vim-json
+let g:vim_json_syntax_conceal = 0
+
+""" Sayonara
 nnoremap <silent> <leader>q :Sayonara<CR>
 nnoremap <silent> <leader>Q :Sayonara!<CR>
 
