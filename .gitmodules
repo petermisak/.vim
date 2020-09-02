@@ -75,9 +75,12 @@
 [submodule "bundle/vim-json"]
 	path = bundle/vim-json
 	url = https://github.com/elzr/vim-json.git
-[submodule "vim-markdown"]
-	path = vim-markdown
+[submodule "bundle/vim-markdown"]
+	path = bundle/vim-markdown
 	url = https://github.com/plasticboy/vim-markdown.git
-[submodule "/Users/peter/.vim/bundle/kotlin-vim"]
-	path = /Users/peter/.vim/bundle/kotlin-vim
+[submodule "bundle/kotlin-vim"]
+	path = bundle/kotlin-vim
 	url = https://github.com/udalov/kotlin-vim
+[submodule "bundle/vim-kotlin"]
+	path = bundle/vim-kotlin
+	url = https://github.com/udalov/kotlin-vim.git
