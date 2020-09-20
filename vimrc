@@ -179,6 +179,15 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 """ vim-json
 let g:vim_json_syntax_conceal = 0
 
+""" vim-markdown
+
+" disable folding
+let g:vim_markdown_folding_disabled = 1
+
+" highlight frontmatter
+let g:vim_markdown_frontmatter = 1
+let g:vim_markdown_toml_frontmatter = 1
+
 """ Sayonara
 nnoremap <silent> <leader>q :Sayonara<CR>
 nnoremap <silent> <leader>Q :Sayonara!<CR>
