@@ -60,7 +60,7 @@ set clipboard=unnamed
 " Editing stuff
 set colorcolumn=120
 
-set rtp+=/opt/local/share/fzf/vim
+set rtp+=/usr/local/opt/fzf
 
 if &tabpagemax < 50
   set tabpagemax=50
