@@ -84,3 +84,6 @@
 [submodule "bundle/vim-kotlin"]
 	path = bundle/vim-kotlin
 	url = https://github.com/udalov/kotlin-vim.git
+[submodule "bundle/bufferline.nvim"]
+	path = bundle/bufferline.nvim
+	url = https://github.com/akinsho/bufferline.nvim
