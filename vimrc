@@ -53,6 +53,14 @@ set hlsearch
 set incsearch
 filetype plugin on
 
+" Syntax hl tweaks
+set nocursorcolumn
+set nocursorline
+
+syntax sync minlines=256
+set synmaxcol=300
+set re=1
+
 " do not hide markdown
 set conceallevel=0
 
@@ -69,8 +77,6 @@ set clipboard=unnamed
 
 " Editing stuff
 set colorcolumn=120
-
-set rtp+=/usr/local/opt/fzf
 
 if &tabpagemax < 50
   set tabpagemax=50
@@ -135,16 +141,13 @@ let iterm_profile = $ITERM_PROFILE
 if iterm_profile == "Atom One Light" || has("gui_running")
   set background=light
   colorscheme one
-  let g:airline_theme="one"
 elseif iterm_profile == "Material / PaperColor"
   set background=light
   colorscheme PaperColor
-  let g:airline_theme="papercolor"
 else
   set background=dark
   let ayucolor="mirage"
   colorscheme ayu
-  let g:airline_theme="ayu_mirage"
 endif
 
 " Better split switching
@@ -158,6 +161,9 @@ map <silent> <leader>/ :nohlsearch<CR>
 
 " This will enable us to do a sudo AFTER opening a file if we forgot to do that before.
 cmap w!! w !sudo tee % >/dev/null
+
+" dont save .netrwhist history
+let g:netrw_dirhistmax=0
 
 " For all text files set 'textwidth' to 80 characters.
 autocmd FileType text setlocal textwidth=80 fo+=2t ts=2 sw=2 sts=2 expandtab
@@ -175,6 +181,64 @@ require'nvim-web-devicons'.setup{
   -- globally enable default icons (default to false)
   -- will get overriden by `get_icons` option
   default = true;
+}
+EOF
+endif
+
+" ==================== telescope.nvim ====================
+if has('nvim')
+  let g:which_key_map.f = { 'name' : '+telescope find' }
+  nnoremap <leader>ff <cmd>Telescope find_files<CR>
+  let g:which_key_map.f.f = 'telescope find files'
+  nnoremap <leader>fg <cmd>Telescope live_grep<CR>
+  let g:which_key_map.f.g = 'telescope live grep'
+  nnoremap <leader>fb <cmd>Telescope buffers<CR>
+  let g:which_key_map.f.b = 'telescope buffers'
+  nnoremap <leader>fh <cmd>Telescope help_tags<CR>
+  let g:which_key_map.f.h = 'telescope help tags'
+
+  " Make Ctrl-p work for telescope since we know those keybindings so well.
+  nnoremap <C-p> <cmd>Telescope find_files<CR>
+  nnoremap <C-g> <cmd>Telescope live_grep<CR>
+  nnoremap <C-b> <cmd>Telescope git_branches<CR>
+
+  if !executable('rg')
+    echo "You might want to install ripgrep: https://github.com/BurntSushi/ripgrep#installation"
+  endif
+
+lua << EOF
+require('telescope').setup{
+  defaults = {
+    mappings = {
+      i = {
+        -- map actions.which_key to ?
+        -- actions.which_key shows the mappings for your picker,
+        -- e.g. git_{create, delete, ...}_branch for the git_branches picker
+        ["?"] = "which_key"
+      }
+    },
+    file_ignore_patterns = {
+      "^.git/",
+      ".DS_Store",
+    },
+  },
+  pickers = {
+    find_files = {
+      theme = "dropdown",
+      find_command = {"rg", "--ignore", "--hidden", "--files"},
+      },
+    live_grep = {
+      theme = "dropdown",
+      },
+    buffers = {
+      theme = "dropdown",
+      },
+    git_branches = {
+      theme = "dropdown",
+      },
+  },
+  extensions = {
+  }
 }
 EOF
 endif
@@ -230,16 +294,10 @@ require'nvim-tree'.setup{
 EOF
 endif
 
-
-""" Airline
-let g:airline_powerline_fonts = 1
-set laststatus=2
-
-""" vim-json
+" ======== vim-json ========
 let g:vim_json_syntax_conceal = 0
 
-""" vim-markdown
-
+" ======== vim-markdown ========
 " disable folding
 let g:vim_markdown_folding_disabled = 1
 
@@ -247,11 +305,30 @@ let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_frontmatter = 1
 let g:vim_markdown_toml_frontmatter = 1
 
-""" Sayonara
-nnoremap <silent> <leader>q :Sayonara<CR>
-nnoremap <silent> <leader>Q :Sayonara!<CR>
+" ======== lualine.nvim ========
+if has('nvim')
+lua << EOF
+require('lualine').setup{
+  options = {
+    theme = 'onelight'
+    }
+  }
+EOF
+endif
 
-""" bufferline.nvim
+" ======== indent-blankline.nvim ========
+if has('nvim')
+lua << EOF
+require("indent_blankline").setup {
+  char = "|",
+  buftype_exclude = {"terminal"},
+  filetype_exclude = {"dashboard"},
+  show_end_of_line = false,
+}
+EOF
+endif
+
+" ======== bufferline.nvim ========
 if has('nvim') 
   set termguicolors
 
@@ -263,5 +340,69 @@ require("bufferline").setup{
 }
 EOF
 endif
+
+" ======== nvim-cmp ========
+if has('nvim-0.5')
+
+lua << EOF
+-- Add additional capabilities supported by nvim-cmp
+local nvim_lsp = require'lspconfig'
+local cmp = require'cmp'
+
+cmp.setup ({
+  snippet = {
+    -- Enable LSP snippets
+    -- REQUIRED - you must specify a snippet engine
+    expand = function(args)
+      vim.fn["vsnip#anonymous"](args.body)
+    end,
+  },
+  mapping = {
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.close(),
+    ['<Down>'] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }), {'i'}),
+    ['<Up>'] = cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }), {'i'}),
+    ['<CR>'] = cmp.mapping.confirm({
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    }),
+  },
+  -- Installed sources
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'vsnip' },
+    { name = 'path' },
+    { name = 'buffer' },
+    { name = 'cmdline' },
+    { name = 'spell' },
+    { name = 'git' },
+  },
+})
+
+
+vim.opt.spelllang = { 'en_us' }
+
+require("cmp_git").setup({
+    -- defaults
+    filetypes = { "gitcommit" },
+    remotes = { "upstream", "origin" }, -- in order of most to least prioritized
+})
+
+-- Setup lspconfig.
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+-- Enable some language servers with the additional completion capabilities offered by nvim-cmp
+local servers = { 'clangd', 'rust_analyzer', 'tsserver' }
+for _, lsp in ipairs(servers) do
+  nvim_lsp[lsp].setup {
+    -- on_attach = my_custom_on_attach,
+    capabilities = capabilities,
+  }
+end
+
+EOF
+
+endif
+
 
 " vim:ts=2:sw=2:et
