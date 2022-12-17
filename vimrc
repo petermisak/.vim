@@ -19,6 +19,7 @@ filetype plugin indent on
 set hidden
 
 set wrap
+set formatoptions=qrn1
 set number                      " Show line numbers
 set showcmd                     " Show me what I'm typing
 set encoding=utf-8              " Set default encoding to utf-8
@@ -38,6 +39,12 @@ set complete-=i
 set showmatch                   " Show matching parenthesis
 set copyindent                  " Copy the previous indentation on autoindenting
 
+" Make the terminal behave sanely (time-out on key codes, but not mappings)
+set notimeout
+set ttimeout
+set ttimeoutlen=10
+set timeoutlen=500
+
 set ruler                       " Show cursor position in Airline
 set noshowmode                  " No need to show mode as we can see it in Airline
 set history=100
@@ -45,6 +52,9 @@ syntax on
 set hlsearch
 set incsearch
 filetype plugin on
+
+" do not hide markdown
+set conceallevel=0
 
 set tabstop=4
 set shiftwidth=4
@@ -69,6 +79,15 @@ endif
 " Change the leader
 let mapleader=","
 let g:mapleader=","
+" ======== vim-which-key ========
+" Setup WhichKey here for our leader.
+" TODO: figure out why the timeout doesn't work
+nnoremap <silent> <leader> :<c-u>WhichKey ','<CR>
+call which_key#register(',', "g:which_key_map")
+" Define prefix dictionary
+let g:which_key_map =  {}
+nnoremap <leader>? :WhichKey ','<CR>
+let g:which_key_map['?'] = 'show help'
 
 " Quickly reload/edit the vimrc file
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
@@ -145,36 +164,76 @@ autocmd FileType text setlocal textwidth=80 fo+=2t ts=2 sw=2 sts=2 expandtab
 autocmd BufNewFile,BufRead *.md,*.txt,*.adoc setlocal textwidth=80 fo+=2t ts=2 sw=2 sts=2 expandtab
 
 
-"""" Plugins
+" =================================== "
+" Plugins
+" =================================== "
 
-"""" CtrlP
-" Use <leader>? to open ctrlp
-let g:ctrlp_map = '<leader>?'
-" Ignore these directories
-let g:ctrlp_use_caching=1
-let g:ctrlp_clear_cache_on_exit = 1
+" ======== nvim-web-devicons ======== 
+if has('nvim')
+lua << EOF
+require'nvim-web-devicons'.setup{
+  -- globally enable default icons (default to false)
+  -- will get overriden by `get_icons` option
+  default = true;
+}
+EOF
+endif
 
-" ignore files in .gitignore
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+" ======== nvim-tree.lua ========
+noremap <C-a> :NvimTreeToggle<CR>
 
-let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist)|(\.(swp|ico|git|svn))$'
+let g:which_key_map.n = { 'name' : '+file tree' }
+noremap <leader>nn :NvimTreeToggle<cr>
+" find the current file in the tree
+let g:which_key_map.n.n = 'file tree toggle'
+noremap <leader>nf :NvimTreeFindFile<cr>
+let g:which_key_map.n.f = 'file tree find file'
 
-" Close nerdtree and vim on close file
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+if has('nvim')
+lua << EOF
+local tree_cb = require'nvim-tree.config'.nvim_tree_callback
+
+require'nvim-tree'.setup{
+  git = {
+    ignore = true,
+  },
+  -- Setting this to true breaks :GBrowse & vim-rhubarb.
+  disable_netrw = false,
+  filters = {
+    dotfiles = false,
+    -- TODO: why doesn't this work
+    custom = {
+      '.git',
+      '.DS_Store',
+    },
+    },
+  renderer = {
+    add_trailing = true,
+    highlight_opened_files = "icon",
+    highlight_git = true,
+    },
+  view = {
+    mappings = {
+      list = {
+        { key = "?", cb = tree_cb("toggle_help") },
+        -- this annoys me when i think I am saving a file and get an error
+        -- so just refresh the tree
+        { key = ":w", cb = tree_cb("refresh") },
+        -- move the file
+        { key = "m", cb = tree_cb("rename") },
+        -- refresh the tree
+        { key = "r", cb = tree_cb("refresh") },
+      }
+    }
+  }
+}
+EOF
+endif
+
 
 """ Airline
 let g:airline_powerline_fonts = 1
 set laststatus=2
-
-""" NerdTree
-nmap <C-n> :NERDTreeToggle<CR>
-noremap <leader>f :NERDTreeFind<CR>
-
-let NERDTreeShowHidden=1
-let NERDTreeIgnore=['\.vim$', '\~$', '\.git$', '.DS_Store']
-
-" Close nerdtree and vim on close file
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 """ vim-json
 let g:vim_json_syntax_conceal = 0
@@ -191,5 +250,18 @@ let g:vim_markdown_toml_frontmatter = 1
 """ Sayonara
 nnoremap <silent> <leader>q :Sayonara<CR>
 nnoremap <silent> <leader>Q :Sayonara!<CR>
+
+""" bufferline.nvim
+if has('nvim') 
+  set termguicolors
+
+lua << EOF
+require("bufferline").setup{
+  options = {
+    diagnostics = "nvim_lsp",
+  }
+}
+EOF
+endif
 
 " vim:ts=2:sw=2:et
