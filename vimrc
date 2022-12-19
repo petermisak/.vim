@@ -178,6 +178,15 @@ autocmd BufNewFile,BufRead *.md,*.txt,*.adoc setlocal textwidth=80 fo+=2t ts=2 s
 if has('nvim')
 lua << EOF
 require'nvim-web-devicons'.setup{
+  override = {
+    md = {
+      icon = "",
+      color = "#519aba",
+      cterm_color = "67",
+      name = "Md"
+    }
+  };
+
   -- globally enable default icons (default to false)
   -- will get overriden by `get_icons` option
   default = true;
