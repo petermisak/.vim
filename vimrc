@@ -12,7 +12,7 @@ filetype off
 filetype plugin indent on
 
 
-"""" Settings
+" ======== Settings ========
 
 " Thanks to this we can have unwritten changes to a file and open a new file
 " using :e, without being forced to write or undo our changes first.
@@ -146,7 +146,7 @@ elseif iterm_profile == "Material / PaperColor"
   colorscheme PaperColor
 else
   set background=dark
-  let ayucolor="mirage"
+  " let ayucolor="mirage"
   colorscheme ayu
 endif
 
@@ -174,7 +174,7 @@ autocmd BufNewFile,BufRead *.md,*.txt,*.adoc setlocal textwidth=80 fo+=2t ts=2 s
 " Plugins
 " =================================== "
 
-" ======== nvim-web-devicons ======== 
+" ======== nvim-web-devicons ========
 if has('nvim')
 lua << EOF
 require'nvim-web-devicons'.setup{
@@ -216,7 +216,7 @@ if has('nvim')
   endif
 
 lua << EOF
-require('telescope').setup{
+require'telescope'.setup{
   defaults = {
     mappings = {
       i = {
@@ -338,7 +338,7 @@ EOF
 endif
 
 " ======== bufferline.nvim ========
-if has('nvim') 
+if has('nvim')
   set termguicolors
 
 lua << EOF
