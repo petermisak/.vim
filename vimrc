@@ -137,15 +137,11 @@ autocmd FileType scala set tabstop=2
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2
 
 " Theme
-let iterm_profile = $ITERM_PROFILE
-if iterm_profile == "Atom One Light" || has("gui_running")
-  set background=light
+if &background == "light" || has("gui_running")
   colorscheme one
 elseif iterm_profile == "Material / PaperColor"
-  set background=light
   colorscheme PaperColor
 else
-  set background=dark
   " let ayucolor="mirage"
   colorscheme ayu
 endif
