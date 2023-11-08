@@ -9,13 +9,13 @@
 	url = https://github.com/neovimhaskell/haskell-vim.git
 [submodule "bundle/vim-fugitive"]
 	path = bundle/vim-fugitive
-	url = git://github.com/tpope/vim-fugitive.git
+	url = https://tpope.io/vim/fugitive.git
 [submodule "bundle/syntastic"]
 	path = bundle/syntastic
 	url = https://github.com/vim-syntastic/syntastic.git
 [submodule "bundle/gruvbox"]
 	path = bundle/gruvbox
-	url = git://github.com/morhetz/gruvbox
+	url = https://github.com/morhetz/gruvbox
 [submodule "bundle/hybridevel"]
 	path = bundle/hybridevel
 	url = https://github.com/vim-scripts/hybridevel
